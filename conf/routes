@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET     /entry/list                 controllers.Application.list()
 GET     /entry/add                  controllers.Application.add()
 POST    /entry/add                  controllers.Application.save()
 

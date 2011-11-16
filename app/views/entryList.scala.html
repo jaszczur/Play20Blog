@@ -1,0 +1,11 @@
+@(entries: java.util.List[models.BlogEntry])
+
+@main("Welcome to Play 2.0 beta") {
+
+<ul>
+  @for(entry <- entries) {
+    <li>@entry.title</li>
+  }
+</ul>
+    
+}
