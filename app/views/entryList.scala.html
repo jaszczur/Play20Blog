@@ -4,8 +4,10 @@
 
 <ul>
   @for(entry <- entries) {
-    <li>@entry.title</li>
+    <li><a href="@routes.Application.get(entry.id)">@entry.title</a></li>
   }
+  <li><a href="@routes.Application.add()">[Add new blog entry]</a></li>
 </ul>
-    
+
+
 }

@@ -29,10 +29,14 @@ private def entryForm() = Form(
     entry.content = content
     entry.save()
     
-    Ok("goood")
+    Ok(views.html.entryList(BlogEntry.finder.all()))
   }
   
   def list = Action {
     Ok(views.html.entryList(BlogEntry.finder.all()))
+  }
+  
+  def get(id: Long) = Action {
+    Ok(views.html.display(BlogEntry.finder.byId(id)))
   }
 }
