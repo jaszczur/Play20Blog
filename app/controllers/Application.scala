@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import models._
+import anorm._
 
 object Application extends Controller {
 
@@ -23,20 +24,21 @@ private def entryForm() = Form(
   }
   
   def save = Action { implicit request =>
-    val entry = new BlogEntry()
     val (title, content) = entryForm().bindFromRequest.get
-    entry.title = title
-    entry.content = content
+    val entry = BlogEntry(NotAssigned, title, content)
     entry.save()
     
-    Ok(views.html.entryList(BlogEntry.finder.all()))
+    Ok(views.html.entryList(BlogEntry.all()))
   }
   
   def list = Action {
-    Ok(views.html.entryList(BlogEntry.finder.all()))
+    Ok(views.html.entryList(BlogEntry.all()))
   }
   
   def get(id: Long) = Action {
-    Ok(views.html.display(BlogEntry.finder.byId(id)))
+    BlogEntry.findById(id) match {
+        case Some(entry) => Ok(views.html.display(entry))
+        case None => Ok("Not found")
+    }
   }
 }

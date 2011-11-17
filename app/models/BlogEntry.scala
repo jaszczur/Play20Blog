@@ -1,24 +1,64 @@
 package models
 
-import java.util._
-import javax.persistence._
+import play.api.db._
+import play.api.Play.current
 
-import play.db.ebean._
-import play.data.format._
-import play.data.validation._
+import anorm._
+import anorm.SqlParser._
 
-@Entity
-class BlogEntry extends Model {
-  @Id
-  var id: Long = 0
-  
-  @Constraints.Required
-  var title: String = null
-  
-  
-  var content: String = null
+case class BlogEntry(id: Pk[Long], title: String, content: String) {
+
+  def save(): BlogEntry = {
+    DB.withConnection { implicit connection =>
+      
+      val id: Long = this.id.getOrElse {
+        SQL("select next value for blog_entry_seq").as(scalar[Long])
+      }
+      
+      SQL(
+        """
+          insert into blog_entry values (
+            {id}, {title}, {content}
+          )
+        """
+      ).on(
+        'id -> id,
+        'title -> this.title,
+        'content -> this.content
+      ).executeUpdate()
+      
+      this.copy(id = Id(id))
+      
+    }
+  }
 }
 
 object BlogEntry {  
-  val finder = new Model.Finder(classOf[Long], classOf[BlogEntry])
+  // -- Parsers
+  
+  val simple = {
+    get[Pk[Long]]("blog_entry.id") ~/
+    get[String]("blog_entry.title") ~/
+    get[String]("blog_entry.content") ^^ {
+      case id~title~content => BlogEntry(
+        id, title, content
+      )
+    }
+  }
+  
+  // -- Queries
+  
+  def findById(id: Long): Option[BlogEntry] = {
+    DB.withConnection { implicit connection =>
+      SQL("select * from blog_entry where id = {id}").on(
+        'id -> id
+      ).as(BlogEntry.simple ?)
+    }
+  }
+  
+  def all(): Seq[BlogEntry] = {
+    DB.withConnection { implicit connection =>
+      SQL("select * from blog_entry").as(BlogEntry.simple *)
+    }
+  }
 }  
