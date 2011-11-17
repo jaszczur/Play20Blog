@@ -2,7 +2,7 @@
 
 @import helper._
 
-@form(action = routes.Application.save()) {
+@form(action = routes.BlogEntryController.save()) {
     @inputText(entryForm("title"))
     @inputText(entryForm("content"))
     <input type=submit>

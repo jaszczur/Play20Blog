@@ -33,7 +33,10 @@ case class BlogEntry(id: Pk[Long], title: String, content: String) {
   }
 }
 
-object BlogEntry {  
+object BlogEntry {
+
+  def apply(title: String, content: String) : BlogEntry = BlogEntry(NotAssigned, title, content)
+
   // -- Parsers
   
   val simple = {

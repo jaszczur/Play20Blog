@@ -6,29 +6,33 @@ import play.api.data._
 import models._
 import anorm._
 
-object Application extends Controller {
 
-private def entryForm() = Form(
-  of(
-    "title" -> text(),
-    "content" -> text()
+object BlogEntryController extends Controller {
+
+  private val entryForm = Form(
+    of(
+      "title" -> requiredText,
+      "content" -> requiredText
+    )
   )
-)
   
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Redirect(controllers.routes.BlogEntryController.list)
   }
   
   def add = Action {
-    Ok(views.html.addEntry(entryForm()))
+    Ok(views.html.addEntry(entryForm))
   }
   
   def save = Action { implicit request =>
-    val (title, content) = entryForm().bindFromRequest.get
-    val entry = BlogEntry(NotAssigned, title, content)
-    entry.save()
-    
-    Ok(views.html.entryList(BlogEntry.all()))
+    entryForm.bindFromRequest.fold(
+      failedForm => Ok(views.html.addEntry(failedForm)),
+      {
+        case (title, content) => 
+          BlogEntry(title, content).save()    
+          Redirect(controllers.routes.BlogEntryController.list)
+      }
+    )
   }
   
   def list = Action {
