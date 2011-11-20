@@ -1,0 +1,8 @@
+@(entry: models.BlogEntry)
+{
+  "blogEntry": {
+    "id": "@entry.id",
+    "title": "@entry.title",
+    "content": "@entry.content"
+  }
+}

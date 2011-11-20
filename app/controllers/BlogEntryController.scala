@@ -43,7 +43,7 @@ object BlogEntryController extends Controller {
     BlogEntry.findById(id) match {
       case Some(entry) => Formats outputFormat {
         case HTMLFormat() => Ok(views.html.display(entry))
-        case JSONFormat() => Ok("kiszka")
+        case JSONFormat() => Ok(views.txt.display(entry))
       }
       case None => Status(404)
     }
