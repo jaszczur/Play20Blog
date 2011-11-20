@@ -35,8 +35,11 @@ object BlogEntryController extends Controller {
     )
   }
   
-  def list = Action {
-    Ok(views.html.entryList(BlogEntry.all()))
+  def list = Action { implicit request =>
+    Formats outputFormat {
+      case HTMLFormat() => Ok(views.html.entryList(BlogEntry.all()))
+      case JSONFormat() => Ok(views.txt.entryList(BlogEntry.all()))
+    }
   }
   
   def get(id: Long) = Action { implicit request =>
