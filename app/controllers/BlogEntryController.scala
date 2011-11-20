@@ -39,10 +39,13 @@ object BlogEntryController extends Controller {
     Ok(views.html.entryList(BlogEntry.all()))
   }
   
-  def get(id: Long) = Action {
+  def get(id: Long) = Action { implicit request =>
     BlogEntry.findById(id) match {
-        case Some(entry) => Ok(views.html.display(entry))
-        case None => Ok("Not found")
+      case Some(entry) => Formats outputFormat {
+        case HTMLFormat() => Ok(views.html.display(entry))
+        case JSONFormat() => Ok("kiszka")
+      }
+      case None => Status(404)
     }
   }
 }
