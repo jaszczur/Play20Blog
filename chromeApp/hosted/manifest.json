@@ -1,17 +1,19 @@
 {
-  "name": "Play20 Blog",
+  "name": "Play20 Blog (hosted app)",
   "description": "Sample blog engine written in Play 2.0",
   "version": "1",
   "app": {
     "urls": [
-      "*://localhost:9000/"
+      "*://localhost/"
     ],
     "launch": {
       "web_url": "http://localhost:9000/entry/list"
     }
   },
   "icons": {
-    "128": "icon_128.png"
+    "16": "icons/icon_16.png",
+    "128": "icons/icon_128.png"
   },
   "permissions": []
 }
+
