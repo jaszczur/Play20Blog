@@ -1,0 +1,21 @@
+body {
+    margin: 50px;
+}
+
+article {
+    padding : 15px;
+    margin-bottom: 30px;
+
+    background-color: #EEE;
+    border-radius: 15px;
+}
+
+article h3 {
+    width: 100px;
+    padding: 5px 15px 5px 15px;
+    background-color: #06D;
+    color: #EEE;
+    border-radius: 15px;
+    cursor: pointer;
+}
+

@@ -1,10 +1,10 @@
-@(entries: Seq[models.BlogEntry])
-{[
+@(entries: Seq[models.BlogEntry])[
   @for(entry <- entries) {
-    "blogEntry": {
+    {
       "id": "@entry.id",
       "title": "@entry.title",
       "content": "@entry.content"
     },
   }
-]}
+]
+

@@ -1,0 +1,16 @@
+{
+  "name": "Play20 Blog (packaged app)",
+  "description": "Sample blog engine written in Play 2.0",
+  "version": "1",
+  "app": {
+    "launch": {
+      "local_path": "main.html"
+    }
+  },
+  "icons": {
+    "16": "icons/icon_16.png",
+    "128": "icons/icon_128.png"
+  },
+  "permissions": ["http://localhost/"]
+}
+
