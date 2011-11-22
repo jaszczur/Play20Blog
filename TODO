@@ -1,0 +1,6 @@
+Backlog / ideas:
+ * use twitter bootstrap to enhance gui
+ * add date field to BlogEntry
+ * add location field to BlogEntry and use html5 geolocation to set it
+ * add "user location" widget to share user location name (google maps reverse geocoding). when site owner has a page opened it will send his/her location to the server
+
