@@ -74,7 +74,7 @@ object BlogEntry {
   
   def all(): Seq[BlogEntry] = {
     DB.withConnection { implicit connection =>
-      SQL("select * from blog_entry").as(BlogEntry.simple *)
+      SQL("select * from blog_entry order by creation_date desc").as(BlogEntry.simple *)
     }
   }
 }  
