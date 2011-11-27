@@ -6,6 +6,8 @@ import play.api.data._
 import models._
 import anorm._
 
+import java.util.Date
+
 
 object BlogEntryController extends Controller {
 
@@ -29,7 +31,7 @@ object BlogEntryController extends Controller {
       failedForm => Ok(views.html.addEntry(failedForm)),
       {
         case (title, content) => 
-          BlogEntry(title, content).save()    
+          BlogEntry(title, content, new Date()).save()    
           Redirect(controllers.routes.BlogEntryController.list)
       }
     )

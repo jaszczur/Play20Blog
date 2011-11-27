@@ -1,6 +1,3 @@
-# --- Created by Ebean DDL
-# To stop Ebean DDL generation, remove this comment and start using Evolutions
-
 # --- !Ups
 
 create table blog_entry (
@@ -11,8 +8,6 @@ create table blog_entry (
 ;
 
 create sequence blog_entry_seq;
-
-
 
 
 # --- !Downs
