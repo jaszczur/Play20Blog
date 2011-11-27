@@ -2,9 +2,36 @@
 
 @import helper._
 
+
+@main("PlayBlog") {
+
+<h2>Add new entry</h2>
+
 @form(action = routes.BlogEntryController.save()) {
-    @inputText(entryForm("title"))
-    @inputText(entryForm("content"))
-    <input type=submit>
+
+  @entryForm.forField("title") { field =>
+  <div class="clearfix @if(field.error.isDefined){ error }">
+    <label for="@field.name">Title</label>
+    <div class="input">
+      <input class="xlarge @if(field.error.isDefined){ error }" name="@field.name" value="@field.value" size="30" type="text">
+      @field.error.map { error => <span class=​"help-inline">​@error.message</span>​ }
+    </div>
+  </div>
+  }
+
+  @entryForm.forField("content") { field =>
+  <div class="clearfix @if(field.error.isDefined){ error }">
+    <label for="@field.name">Contents</label>
+    <div class="input">
+      <textarea class="xxlarge @if(field.error.isDefined){ error }" name="@field.name" value="@field.value"></textarea>
+      @field.error.map { error => <span class=​"help-inline">​@error.message</span>​ }
+    </div>
+  </div>
+  }
+
+  <div class="actions">
+    <input type="submit" class="btn primary">
+  </div>
 }
 
+}

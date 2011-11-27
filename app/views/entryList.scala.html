@@ -1,13 +1,20 @@
 @(entries: Seq[models.BlogEntry])
 
-@main("Welcome to Play 2.0 beta") {
+@main("PlayBlog") {
 
+
+<h1>Play 2.0 blog</h1>
+
+<h2>Blog entries</h2>
 <ul>
   @for(entry <- entries) {
     <li><a href="@routes.BlogEntryController.get(entry.id.get)">@entry.title</a></li>
   }
-  <li><a href="@routes.BlogEntryController.add()">[Add new blog entry]</a></li>
 </ul>
 
+
+<div class="well">
+  <a href="@routes.BlogEntryController.add()" class="btn small primary">​Add new blog entry​</a>​
+</div>
 
 }
