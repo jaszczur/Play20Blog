@@ -1,4 +1,5 @@
 @(entries: Seq[models.BlogEntry])
+@import java.util.Date
 
 @main("PlayBlog") {
 
@@ -8,7 +9,7 @@
 <h2>Blog entries</h2>
 <ul>
   @for(entry <- entries) {
-    <li><a href="@routes.BlogEntryController.get(entry.id.get)">@entry.title</a> [@entry.creationDate]</li>
+    <li><a href="@routes.BlogEntryController.get(entry.id.get)">@entry.title</a> [@entry.creationDate] @if(entry.isNew) {<span class="label success">New</span>} else {<span class="label">Old like hell</span>}</li>
   }
 </ul>
 

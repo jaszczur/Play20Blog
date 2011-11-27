@@ -10,6 +10,10 @@ import java.util.Date
 
 case class BlogEntry(id: Pk[Long], title: String, content: String, creationDate: Date) {
 
+  def isNew() : Boolean = {
+    creationDate.after(new Date(System.currentTimeMillis() - 30*1000))  
+  }
+
   def save(): BlogEntry = {
     DB.withConnection { implicit connection =>
       
