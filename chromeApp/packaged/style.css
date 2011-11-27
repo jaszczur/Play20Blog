@@ -5,16 +5,28 @@ body {
 article {
     padding : 15px;
     margin-bottom: 30px;
-
     background-color: #EEE;
     border-radius: 15px;
 }
 
 article h3 {
     padding: 5px 15px 5px 15px;
+    margin: 0px;
     background-color: #06D;
     color: #EEE;
     border-radius: 15px;
     cursor: pointer;
+}
+
+
+time[pubdate] {
+    display: block;
+    font-size: x-small;
+    margin: 2px 0px 15px 15px;
+    color: #888;
+}
+
+article section {
+    margin-top: 15px;
 }
 

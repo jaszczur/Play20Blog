@@ -3,6 +3,7 @@
     {
       "id": "@entry.id",
       "title": "@entry.title",
+      "creationDate": "@entry.creationDate",
       "content": "@entry.content"
     },
   }
