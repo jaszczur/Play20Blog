@@ -23,7 +23,7 @@
   <div class="clearfix @if(field.error.isDefined){ error }">
     <label for="@field.name">Contents</label>
     <div class="input">
-      <textarea class="xxlarge @if(field.error.isDefined){ error }" name="@field.name" value="@field.value"></textarea>
+      <textarea class="xxlarge @if(field.error.isDefined){ error }" name="@field.name">@field.value</textarea>
       @field.error.map { error => <span class=​"help-inline">​@error.message</span>​ }
     </div>
   </div>
@@ -31,6 +31,7 @@
 
   <div class="actions">
     <input type="submit" class="btn primary">
+    <a href="@routes.BlogEntryController.list()" class="btn">​Cancel</a>​
   </div>
 }
 
