@@ -14,7 +14,8 @@ object BlogEntryController extends Controller {
   private val entryForm = Form(
     of(
       "title" -> requiredText,
-      "content" -> requiredText
+      "content" -> requiredText,
+      "location" -> text
     )
   )
   
@@ -30,8 +31,8 @@ object BlogEntryController extends Controller {
     entryForm.bindFromRequest.fold(
       failedForm => Ok(views.html.addEntry(failedForm)),
       {
-        case (title, content) => 
-          BlogEntry(title, content, new Date()).save()    
+        case (title, content, location) => 
+          BlogEntry(title, content, location, new Date()).save()    
           Redirect(controllers.routes.BlogEntryController.list)
       }
     )

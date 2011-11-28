@@ -1,4 +1,4 @@
-@(entryForm: Form[(String, String)])
+@(entryForm: Form[(String, String, String)])
 
 @import helper._
 
@@ -8,6 +8,8 @@
 <h2>Add new entry</h2>
 
 @form(action = routes.BlogEntryController.save()) {
+
+  <input type="hidden" name="location" id="physicalLocation" value="">
 
   @entryForm.forField("title") { field =>
   <div class="clearfix @if(field.error.isDefined){ error }">
@@ -33,6 +35,11 @@
     <input type="submit" class="btn primary">
     <a href="@routes.BlogEntryController.list()" class="btn">​Cancel</a>​
   </div>
+  
+  
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="@routes.Assets.at("javascripts/geolocation.js")"></script>
+  <script type="text/javascript" src="@routes.Assets.at("javascripts/add_entry.js")"></script>
 }
 
 }
