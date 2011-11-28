@@ -1,5 +1,5 @@
 body {
-    margin: 50px;
+    margin: 50px 20% 50px 20%;
 }
 
 article {
@@ -9,21 +9,25 @@ article {
     border-radius: 15px;
 }
 
-article h3 {
+article header {
     padding: 5px 15px 5px 15px;
     margin: 0px;
     background-color: #06D;
     color: #EEE;
     border-radius: 15px;
-    cursor: pointer;
 }
 
+article header p.location {
+    font-size: x-small;
+}
 
-time[pubdate] {
+article header p.location:before {
+    content: "Published from: ";
+}
+
+article header time[pubdate] {
     display: block;
     font-size: x-small;
-    margin: 2px 0px 15px 15px;
-    color: #888;
 }
 
 article section {

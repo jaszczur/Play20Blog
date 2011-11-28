@@ -4,6 +4,7 @@
       "id": "@entry.id",
       "title": "@entry.title",
       "creationDate": "@entry.creationDate",
+      "location": "@entry.location",
       "content": "@entry.content"
     },
   }

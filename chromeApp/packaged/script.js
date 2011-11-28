@@ -8,12 +8,16 @@ document.observe("dom:loaded", function() {
             console.log("dupa");
         
             var art = new Element('article');
+            var header = new Element('header');
+            var title = new Element('h3').update(entry.title);
             var pubdate = new Element('time', {pubdate: 'pubdate'}).update(entry.creationDate);
-            var header = new Element('h3').update(entry.title);
+            var location = new Element('p', {"class": "location"}).update(entry.location);
             var section = new Element('section').update(entry.content);
             
+            header.appendChild(title);
+            header.appendChild(pubdate);
+            header.appendChild(location);
             art.appendChild(header);
-            art.appendChild(pubdate);
             art.appendChild(section);
             $('articles').appendChild(art);
         });

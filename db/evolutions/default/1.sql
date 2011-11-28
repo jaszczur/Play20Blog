@@ -3,7 +3,7 @@
 create table blog_entry (
   id                        bigint not null,
   title                     varchar(255),
-  content                   varchar(255),
+  content                   varchar(4096),
   constraint pk_blog_entry primary key (id))
 ;
 
