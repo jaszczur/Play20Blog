@@ -9,8 +9,6 @@
 
 @form(action = routes.BlogEntryController.save()) {
 
-  <input type="hidden" name="location" id="physicalLocation" value="">
-
   @entryForm.forField("title") { field =>
   <div class="clearfix @if(field.error.isDefined){ error }">
     <label for="@field.name">Title</label>
@@ -27,6 +25,15 @@
     <div class="input">
       <textarea class="xxlarge @if(field.error.isDefined){ error }" name="@field.name">@field.value</textarea>
       @field.error.map { error => <span class=​"help-inline">​@error.message</span>​ }
+    </div>
+  </div>
+  }
+  
+  @entryForm.forField("location") { field =>
+  <div class="clearfix">
+    <label for="@field.name">Location</label>
+    <div class="input">
+      <input class="xlarge" name="@field.name" value="@field.value" size="30" type="text" id="physicalLocation">
     </div>
   </div>
   }

@@ -6,8 +6,8 @@ var Position = function(locationChangedCallback) {
     this.placeName = null;
     this.GEOLOCATION_RESULTS_POSITION = 1;
     
-//    navigator.geolocation.getCurrentPosition(this._setCoordinates.bind(this));
-    this.watchId = navigator.geolocation.watchPosition(this._setCoordinates.bind(this));
+    navigator.geolocation.getCurrentPosition(this._setCoordinates.bind(this));
+//    this.watchId = navigator.geolocation.watchPosition(this._setCoordinates.bind(this));
 };
 
 Position.prototype = {
