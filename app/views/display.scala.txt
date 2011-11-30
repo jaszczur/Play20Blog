@@ -1,4 +1,4 @@
-@(entry: models.BlogEntry)
+@(entry: domain.BlogEntry)
 {
   "blogEntry": {
     "id": "@entry.id",

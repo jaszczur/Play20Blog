@@ -1,4 +1,4 @@
-package models
+package dao
 
 import play.api.db._
 import play.api.Play.current
@@ -8,17 +8,9 @@ import anorm.SqlParser._
 
 import java.util.Date
 
-case class BlogEntry(id: Pk[Long], title: String, content: String, location: String, creationDate: Date) {
+import domain._
 
-  def isNew() : Boolean = creationDate.after(new Date(System.currentTimeMillis() - 30*1000))
-
-  def save(): BlogEntry = BlogEntry.save(this)
-}
-
-object BlogEntry {
-
-  def apply(title: String, content: String, location: String, creationDate: Date) : BlogEntry = BlogEntry(NotAssigned, title, content, location, creationDate)
-
+class BlogEntryDAO extends DAO[Long, BlogEntry] {
   // -- Parsers
   
   val simple = {
@@ -37,21 +29,21 @@ object BlogEntry {
   
   // -- Queries
   
-  def findById(id: Long): Option[BlogEntry] = {
+  override def find(id: Long): Option[BlogEntry] = {
     DB.withConnection { implicit connection =>
       SQL("select * from blog_entry where id = {id}").on(
         'id -> id
-      ).as(BlogEntry.simple ?)
+      ).as(simple ?)
     }
   }
   
-  def all(): Seq[BlogEntry] = {
+  override def list(): Seq[BlogEntry] = {
     DB.withConnection { implicit connection =>
-      SQL("select * from blog_entry order by creation_date desc").as(BlogEntry.simple *)
+      SQL("select * from blog_entry order by creation_date desc").as(simple *)
     }
   }
   
-  def save(entry: BlogEntry): BlogEntry = {
+  override def save(entry: BlogEntry): BlogEntry = {
     DB.withConnection { implicit connection =>
       
       val id: Long = entry.id.getOrElse {

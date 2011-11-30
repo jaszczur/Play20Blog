@@ -1,4 +1,4 @@
-@(entries: Seq[models.BlogEntry])[
+@(entries: Seq[domain.BlogEntry])[
   @for(entry <- entries) {
     {
       "id": "@entry.id",

@@ -3,13 +3,13 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.data._
-import models._
-import anorm._
+import domain._
 
 import java.util.Date
 
 
 object BlogEntryController extends Controller {
+  private val blog = Application.blog
 
   private val entryForm = Form(
     of(
@@ -32,7 +32,7 @@ object BlogEntryController extends Controller {
       failedForm => Ok(views.html.addEntry(failedForm)),
       {
         case (title, content, location) => 
-          BlogEntry(title, content, location, new Date()).save()    
+          blog.addNewEntry(BlogEntry(title, content, location, new Date()))
           Redirect(controllers.routes.BlogEntryController.list)
       }
     )
@@ -40,13 +40,13 @@ object BlogEntryController extends Controller {
   
   def list = Action { implicit request =>
     Formats outputFormat {
-      case HTMLFormat() => Ok(views.html.entryList(BlogEntry.all()))
-      case JSONFormat() => Ok(views.txt.entryList(BlogEntry.all()))
+      case HTMLFormat() => Ok(views.html.entryList(blog.listEntries()))
+      case JSONFormat() => Ok(views.txt.entryList(blog.listEntries()))
     }
   }
   
   def get(id: Long) = Action { implicit request =>
-    BlogEntry.findById(id) match {
+    blog.findEntryById(id) match {
       case Some(entry) => Formats outputFormat {
         case HTMLFormat() => Ok(views.html.display(entry))
         case JSONFormat() => Ok(views.txt.display(entry))
@@ -55,3 +55,12 @@ object BlogEntryController extends Controller {
     }
   }
 }
+
+
+object Application {
+  private val storage = new Storage(new dao.BlogEntryDAO())
+  val blog = new Blog(storage)
+  
+  
+}
+
