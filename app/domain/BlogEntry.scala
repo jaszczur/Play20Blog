@@ -1,10 +1,9 @@
 package domain
 
 import java.util.Date
-import anorm.{Pk, NotAssigned}
 
 case class BlogEntry(
-  id: Pk[Long],
+  id: Option[Long],
   title: String,
   content: String,
   location: String,
@@ -20,7 +19,7 @@ object BlogEntry {
       content: String,
       location: String,
       creationDate: Date) : BlogEntry = {
-    BlogEntry(NotAssigned, title, content, location, creationDate)
+    BlogEntry(None, title, content, location, creationDate)
   }
 }
 
