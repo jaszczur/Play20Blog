@@ -13,10 +13,7 @@ import domain._
 class BlogEntryDAO extends DAO[Long, BlogEntry] {
   // -- Utils
 
-  implicit def pk2option[ID](pk : Pk[ID]) : Option[ID] = pk match {
-    case Id(id : ID) => Some(id)
-    case NotAssigned => None
-  }
+  implicit def pk2option[ID](pk : Pk[ID]) : Option[ID] = pk.toOption
 
   // -- Parsers
   
