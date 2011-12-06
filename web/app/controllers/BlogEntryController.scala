@@ -6,7 +6,7 @@ import play.api.data._
 import domain._
 
 import java.util.Date
-
+//import org.picocontainer._
 
 object BlogEntryController extends Controller {
   private val blog = Application.blog
@@ -58,6 +58,7 @@ object BlogEntryController extends Controller {
 
 
 object Application {
+  //private val pico : DefaultPicoContainer = new PicoBuilder().withConstructorInjection().build().asInstanceOf[DefaultPicoContainer]
   private val storage = new Storage(new dao.BlogEntryDAO())
   val blog = new Blog(storage)
   
