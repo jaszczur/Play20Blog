@@ -4,7 +4,7 @@ import PlayProject._
 
 object ApplicationBuild extends Build {
 
-    val appName         = "Play20Blog"
+    val appName         = "blog-web"
     val appVersion      = "1.0"
 
 //    override def ivyRepositories = Seq(Resolver.defaultLocal)

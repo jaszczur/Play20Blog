@@ -9,7 +9,7 @@ case class BlogEntry(
   location: String,
   creationDate: Date
 ) {
-  def isNew() : Boolean = creationDate.after(new Date(System.currentTimeMillis() - 30*1000))
+  def isNew() : Boolean = creationDate.after(new Date(System.currentTimeMillis() - 10*1000))
 }
 
 
