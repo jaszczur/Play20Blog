@@ -2,8 +2,8 @@ Sample application - blog engine
 
 How to get started:
 1. Get & build latest Play 2.0 framework (https://github.com/playframework/Play20/wiki/Installing).
-2. Go to project directory and execute "play" command.
-3. Type 'run' in play console. This will start a server.
-4. Open your browser and go to http://localhost:9000/
-
-
+2. Get & install latest SBT.
+3. In console go to domain directory and execute "sbt publish"
+4. Go to web directory and execute "play" command.
+5. Type "run" in play console. This will start a server.
+6. Open your browser and go to http://localhost:9000/
