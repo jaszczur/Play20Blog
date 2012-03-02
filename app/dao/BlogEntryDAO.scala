@@ -20,11 +20,11 @@ class BlogEntryDAO extends DAO[Long, BlogEntry] {
   val simple = {
     def parseDate(s: String) : Date = new Date(java.lang.Long.valueOf(s))
   
-    get[Pk[Long]]("blog_entry.id") ~/
-    get[String]("blog_entry.title") ~/
-    get[String]("blog_entry.content") ~/
-    get[String]("blog_entry.location") ~/
-    get[Date]("blog_entry.creation_date") ^^ {
+    get[Pk[Long]]("blog_entry.id") ~ 
+    get[String]("blog_entry.title") ~
+    get[String]("blog_entry.content") ~
+    get[String]("blog_entry.location") ~
+    get[Date]("blog_entry.creation_date") map {
       case id~title~content~location~creationDate => BlogEntry(
         id, title, content, location, creationDate
       )
@@ -37,7 +37,7 @@ class BlogEntryDAO extends DAO[Long, BlogEntry] {
     DB.withConnection { implicit connection =>
       SQL("select * from blog_entry where id = {id}").on(
         'id -> id
-      ).as(simple ?)
+      ).as(simple *).headOption
     }
   }
   
@@ -51,7 +51,7 @@ class BlogEntryDAO extends DAO[Long, BlogEntry] {
     DB.withConnection { implicit connection =>
       
       val id: Long = entry.id.getOrElse {
-        SQL("select next value for blog_entry_seq").as(scalar[Long])
+        SQL("select next value for blog_entry_seq").as(scalar[Long].single)
       }
       
       val formattedDate = {

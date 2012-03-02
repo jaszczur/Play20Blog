@@ -3,10 +3,10 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.BlogEntryController.index()
-GET     /entry/list                 controllers.BlogEntryController.list()
-GET     /entry/add                  controllers.BlogEntryController.add()
-POST    /entry/add                  controllers.BlogEntryController.save()
+GET     /                           controllers.BlogEntryController.index
+GET     /entry/list                 controllers.BlogEntryController.list
+GET     /entry/add                  controllers.BlogEntryController.add
+POST    /entry/add                  controllers.BlogEntryController.save
 GET     /entry/:id                  controllers.BlogEntryController.get(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path

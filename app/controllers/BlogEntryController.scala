@@ -3,6 +3,8 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.data._
+import play.api.data.Forms._
+import play.api.data.validation.Constraints._
 import domain._
 
 import java.util.Date
@@ -12,9 +14,9 @@ object BlogEntryController extends Controller {
   private val blog = Application.blog
 
   private val entryForm = Form(
-    of(
-      "title" -> requiredText,
-      "content" -> requiredText,
+    tuple(
+      "title" -> nonEmptyText,
+      "content" -> nonEmptyText,
       "location" -> text
     )
   )
@@ -40,16 +42,16 @@ object BlogEntryController extends Controller {
   
   def list = Action { implicit request =>
     Formats outputFormat {
-      case HTMLFormat() => Ok(views.html.entryList(blog.listEntries()))
-      case JSONFormat() => Ok(views.txt.entryList(blog.listEntries()))
+      case HTMLFormat => Ok(views.html.entryList(blog.listEntries()))
+      case JSONFormat => Ok(views.txt.entryList(blog.listEntries()))
     }
   }
   
   def get(id: Long) = Action { implicit request =>
     blog.findEntryById(id) match {
       case Some(entry) => Formats outputFormat {
-        case HTMLFormat() => Ok(views.html.display(entry))
-        case JSONFormat() => Ok(views.txt.display(entry))
+        case HTMLFormat => Ok(views.html.display(entry))
+        case JSONFormat => Ok(views.txt.display(entry))
       }
       case None => Status(404)
     }
