@@ -3,7 +3,7 @@ package controllers
 import play.api._
 import play.api.mvc._
 
-abstract class OutputFormat
+sealed trait OutputFormat
 case object HTMLFormat extends OutputFormat
 case object JSONFormat extends OutputFormat
 

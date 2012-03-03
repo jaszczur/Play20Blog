@@ -1,4 +1,4 @@
-@(entryForm: Form[(String, String, String)])
+@(entryForm: Form[(String, String, String, String, String)])
 
 @import helper._
 
@@ -29,13 +29,21 @@
   </div>
   }
   
-  @entryForm.forField("location") { field =>
+  @entryForm.forField("locationName") { field =>
   <div class="clearfix">
     <label for="@field.name">Location</label>
     <div class="input">
-      <input class="xlarge" name="@field.name" value="@field.value" size="30" type="text" id="physicalLocation">
+      <input class="xlarge" name="@field.name" value="@field.value" size="30" type="text" id="physicalLocationName">
     </div>
   </div>
+  }
+
+  @entryForm.forField("locationLat") { field =>
+    <input name="@field.name" value="@field.value" type="hidden" id="physicalLocationLatitude">
+  }
+  
+  @entryForm.forField("locationLong") { field =>
+    <input name="@field.name" value="@field.value" type="hidden" id="physicalLocationLongitude">
   }
 
   <div class="actions">

@@ -17,7 +17,9 @@ object BlogEntryController extends Controller {
     tuple(
       "title" -> nonEmptyText,
       "content" -> nonEmptyText,
-      "location" -> text
+      "locationLat" -> text,
+      "locationLong" -> text,
+      "locationName" -> text
     )
   )
   
@@ -33,8 +35,8 @@ object BlogEntryController extends Controller {
     entryForm.bindFromRequest.fold(
       failedForm => Ok(views.html.addEntry(failedForm)),
       {
-        case (title, content, location) => 
-          blog.addNewEntry(BlogEntry(title, content, location, new Date()))
+        case (title, content, locationLat, locationLong, locationName) => 
+          blog.addNewEntry(BlogEntry(title, content, new Date(), Location(locationLat.toDouble, locationLong.toDouble, locationName)))
           Redirect(controllers.routes.BlogEntryController.list)
       }
     )

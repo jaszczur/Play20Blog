@@ -2,7 +2,7 @@ package domain
 
 class Storage(
   val entries : DAO[Long, BlogEntry]
-) {}
+)
 
 
 trait DAO[PK, E] {

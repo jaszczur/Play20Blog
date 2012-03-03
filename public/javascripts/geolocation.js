@@ -20,7 +20,7 @@ Position.prototype = {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[this.GEOLOCATION_RESULTS_POSITION]) {
                     this.placeName = results[this.GEOLOCATION_RESULTS_POSITION].formatted_address
-                    this._locationChangedCallback(this.placeName);
+                    this._locationChangedCallback(this.placeName, this._coordinates);
                 }
             } else {
                 log.console("Geocoder failed due to: " + status);

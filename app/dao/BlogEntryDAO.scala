@@ -17,16 +17,30 @@ class BlogEntryDAO extends DAO[Long, BlogEntry] {
 
   // -- Parsers
   
-  val simple = {
+  val simpleParser = {
+    def parseDate(s: String) : Date = new Date(java.lang.Long.valueOf(s))
+  
+    get[Pk[Long]]("blog_entry.id") ~ 
+    get[String]("blog_entry.title") ~
+    get[Date]("blog_entry.creation_date") map {
+      case id~title~creationDate => BlogEntry(
+        id, title, "", creationDate, Location(0.0, 0.0, "")
+      )
+    }
+  }
+
+  val fullParser = {
     def parseDate(s: String) : Date = new Date(java.lang.Long.valueOf(s))
   
     get[Pk[Long]]("blog_entry.id") ~ 
     get[String]("blog_entry.title") ~
     get[String]("blog_entry.content") ~
-    get[String]("blog_entry.location") ~
-    get[Date]("blog_entry.creation_date") map {
-      case id~title~content~location~creationDate => BlogEntry(
-        id, title, content, location, creationDate
+    get[Date]("blog_entry.creation_date") ~
+    get[Double]("location.latitude") ~
+    get[Double]("location.longitude") ~
+    get[String]("location.name") map {
+      case id~title~content~creationDate~latitude~longitude~locName => BlogEntry(
+        id, title, content, creationDate, Location(latitude, longitude, locName)
       )
     }
   }
@@ -35,15 +49,15 @@ class BlogEntryDAO extends DAO[Long, BlogEntry] {
   
   override def find(id: Long): Option[BlogEntry] = {
     DB.withConnection { implicit connection =>
-      SQL("select * from blog_entry where id = {id}").on(
+      SQL("select * from blog_entry join location on location.id = blog_entry.location_id where blog_entry.id = {id}").on(
         'id -> id
-      ).as(simple *).headOption
+      ).as(fullParser *).headOption
     }
   }
   
   override def list(): Seq[BlogEntry] = {
     DB.withConnection { implicit connection =>
-      SQL("select * from blog_entry order by creation_date desc").as(simple *)
+      SQL("select * from blog_entry order by creation_date desc").as(simpleParser *)
     }
   }
   
@@ -58,25 +72,35 @@ class BlogEntryDAO extends DAO[Long, BlogEntry] {
         val h2DateFormatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         h2DateFormatter.format(entry.creationDate)
       }
+
+      SQL(
+        """
+          insert into location (id, latitude, longitude, name) values ({id}, {latitude}, {longitude}, {name})
+        """
+      ).on(
+        'id -> id,
+        'latitude -> entry.location.latitude,
+        'longitude -> entry.location.longitude,
+        'name -> entry.location.name
+      ).executeUpdate()
       
       SQL(
         """
           insert into blog_entry (
-            id, title, content, location, creation_date
+            id, title, content, creation_date, location_id
           ) values (
-            {id}, {title}, {content}, {location}, {creationDate}
+            {id}, {title}, {content}, {creationDate}, {locationId}
           )
         """
       ).on(
         'id -> id,
         'title -> entry.title,
         'content -> entry.content,
-        'location -> entry.location,
-        'creationDate -> formattedDate
+        'creationDate -> formattedDate,
+        'locationId -> id
       ).executeUpdate()
       
       entry.copy(id = Id(id))
-      
     }
   }
 }

@@ -3,6 +3,11 @@
   "blogEntry": {
     "id": "@entry.id",
     "title": "@entry.title",
-    "content": "@entry.content"
+    "content": "@entry.content",
+    "location": {
+      "name": "@entry.location.name",
+      "latitude": @entry.location.latitude,
+      "longitude": @entry.location.longitude
+    }
   }
 }
