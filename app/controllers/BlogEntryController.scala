@@ -65,7 +65,5 @@ object Application {
   //private val pico : DefaultPicoContainer = new PicoBuilder().withConstructorInjection().build().asInstanceOf[DefaultPicoContainer]
   private val storage = new Storage(new dao.BlogEntryDAO())
   val blog = new Blog(storage)
-  
-  
 }
 
